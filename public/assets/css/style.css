@@ -77,7 +77,7 @@ h1 {
     .navbar {
       background-size: cover;
       background-position: center;
-      background-image: url('/assets/img/fachada-mobile.jpeg'); /* Ruta correcta de tu imagen móvil */
+      background-image: url('/public/assets/img/fachada-mobile.jpeg'); /* Ruta correcta de tu imagen móvil */
     }
   
     .navbar img {
