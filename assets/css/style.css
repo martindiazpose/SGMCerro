@@ -22,7 +22,7 @@ body {
 
 h1 {
     margin: 0;
-    color:white
+    color:black
 }
 
 .custom-button {
@@ -98,3 +98,16 @@ h1 {
       color: black;
     }
   }
+  @media (max-width: 767px) {
+    .navbar-toggler-icon {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+        content: "";
+        background: no-repeat center center;
+        background-size: 100% 100%;
+        background-color: rgb(206, 81, 9);
+        border-color: transparent;
+        border-radius:50px; /* Ajusta según tus necesidades */
+    }
