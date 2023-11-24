@@ -29,8 +29,10 @@
     </div>
   </nav>
 
-  <div class="container mt-4 custom-form bg-white p-4 rounded d-flex justify-content-center align-items-center">
-    <form id="miFormulario" action="https://sgmcerro.herokuapp.com/guardar-en-excel" method="post" onsubmit="return validateForm()">  <label for="formID">ID:</label>
+  <div class="container mt-4 custom-form bg-white p-4 rounded">
+    <form id="miFormulario" action="https://sgmcerro.herokuapp.com/guardar-en-excel" method="post" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="formID">ID:</label>
         <input type="text" class="form-control" id="formID" name="formID" readonly />
       </div>
       <div class="row">
@@ -181,7 +183,7 @@
     </div>
     <footer class="text-center mt-4">
       <p class="footer-text">&copy; 2023 Web creada por IT Etarey</p>
-    </footer>
+    </footer>  
     <script>
       function resetForm() {
         const form = document.getElementById('miFormulario');
@@ -248,9 +250,10 @@
         return true;
       }
     </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
 </body>
   
   </html>
