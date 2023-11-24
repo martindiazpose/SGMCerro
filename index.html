@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tareas de Mantenimiento</title>
+  <link rel="icon" href="/assets/img/SGMC.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container d-flex align-items-center">
+      <a class="navbar-brand" href="https://www.teyma.com/" target="_blank">
+        <img src="./assets/img/logo.svg" class="d-inline-block align-top" alt="Logo TEYMA">
+      </a>
+      <h1 class="mt-4 text-center flex-grow-1 text-white">Tareas Mantenimiento</h1>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav mx-auto">
+          <a href="/pages/manual.html" class="btn btn-primary mt-2 custom-button centered-button" target="_blank">Manual de Llenado Formulario</a>
+          <a href="/pages/llenado.html" class="btn btn-primary mt-2 custom-button centered-button" target="_blank">Responsables de Cargar Formularios</a>
+          <a href="/pages/tareas-cargadas.html" class="btn btn-primary mt-2 custom-button centered-button" target="_blank">Tareas Cargadas</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4 custom-form bg-white p-4 rounded d-flex justify-content-center align-items-center">
+    <form id="miFormulario" action="/guardar-en-excel" method="post" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="formID">ID:</label>
+        <input type="text" class="form-control" id="formID" name="formID" readonly />
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-3">
+          <label for="fecha">FECHA</label>
+          <input type="date" class="form-control" id="fecha" name="fecha" required />
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <label for="horaComienzo">HORA COMIENZO</label>
+          <input type="time" class="form-control" id="horaComienzo" name="hora_comienzo" required />
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <label for="modulo">Edificio</label>
+            <select class="form-control custom-select" id="modulo" name="modulo" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="Hospital">Hospital</option>
+              <option value="Emergencia">Emergencia</option>
+              <option value="Same 105">SAME 105</option>
+              <option value="Sector A">Sector A</option>
+              <option value="Sector B">Sector B</option>
+              <option value="Sector C">Sector C</option>
+              <option value="Sector D">Sector D</option>
+              <option value="Imagenologia">Imagenologia</option>
+            </select>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <label for="piso">Area</label>
+            <select class="form-control custom-select" id="piso" name="piso" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="PB">PB</option>
+              <option value="P1">P1</option>
+              <option value="P2">P2</option>
+              <option value="PT">PT</option>
+              <option value="TODOS">TODOS</option>
+              <option value="EXTERIOR">EXTERIOR</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <label for="fechaCierre">FECHA CIERRE</label>
+            <input type="date" class="form-control" id="fechaCierre" name="fecha_cierre" required />
+          </div>
+          <div class="col-md-3">
+            <label for="horaFin">HORA FIN</label>
+            <input type="time" class="form-control" id="horaFin" name="hora_fin" required />
+          </div>
+          <div class="col-md-6">
+            <label for="local">LOCAL</label>
+            <input type="text" class="form-control" id="local" name="local" required />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <label for="disciplina">DISCIPLINA</label>
+            <select class="form-control custom-select" id="disciplina" name="disciplina" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="ACOND. TERMICO">ACOND. TERMICO</option>
+              <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
+              <option value="CERRAJERIA">CERRAJERIA</option>
+              <option value="CIVIL">CIVIL</option>
+              <option value="CONTROL DE PLAGAS">CONTROL DE PLAGAS</option>
+              <option value="ELECTRICA">ELECTRICA</option>
+              <option value="EQUIPAMIENTO ESTANDAR">
+                EQUIPAMIENTO ESTANDAR
+              </option>
+              <option value="HERRERIA">HERRERIA</option>
+              <option value="IT">IT</option>
+              <option value="JARDINERIA">JARDINERIA</option>
+              <option value="MECANICA">MECANICA</option>
+              <option value="SANITARIA">SANITARIA</option>
+              <option value="SEGURIDAD">SEGURIDAD</option>
+              <option value="SIST.COMBUSTIBLE">SIST. COMBUSTIBLE</option>
+              <option value="SIST.INCENDIO">SIST. INCENDIO</option>
+              <option value="RECORRIDA">RECORRIDA</option>
+            </select>
+          </div>
+          <div class="col-md-9">
+            <label for="causaDiagnostico">CAUSA/DIAGNOSTICO</label>
+            <select class="form-control custom-select" id="causaDiagnostico" name="causaDiagnostico" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+              <option value="MAL USO">MAL USO</option>
+              <option value="PREVENTIVO">PREVENTIVO</option>
+              <option value="VANDALISMO">VANDALISMO</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <label for="nombreElemento">NOMBRE DEL ELEMENTO</label>
+            <input type="text" class="form-control" id="nombreElemento" name="nombre_elemento" required />
+          </div>
+          <div class="col-md-3">
+            <label for="estado">ESTADO</label>
+            <select class="form-control custom-select" id="estado" name="estado" required>
+              <option value="CERRADO">CERRADO</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="solicitado">SOLICITADO</label>
+            <select class="form-control custom-select" id="solicitado" name="solicitado" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="Encargado">Encargado de Turno</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <label for="personal">PERSONAL</label>
+            <select class="form-control custom-select" id="personal" name="personal" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="Carlos Gonzalez">Carlos Gonzalez</option>
+              <option value="Francis Rodriguez">Francis Rodriguez </option>
+              <option value="TERCERIZADO">TERCERIZADO</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="equipo">EQUIPO</label>
+            <select class="form-control custom-select" id="equipo" name="equipo" required>
+              <option disabled selected>Seleccionar...</option>
+              <option value="MATUTINO / 06a14">MATUTINO / 06a14</option>
+              <option value="VESPERTINO / 14a22">VESPERTINO / 14a22</option>
+              <option value="NOCTURNO / 22a06">NOCTURNO / 22a06</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <label for="observaciones">OBSERVACIONES</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" rows="3" required></textarea>
+          </div>
+          <div class="col-md-6">
+            <label for="materiales">MATERIALES / COMENTARIOS</label>
+            <textarea class="form-control" id="materiales" name="materiales" rows="3" required></textarea>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <label for="numeroPpl">Num. PPL</label>
+            <input type="text" class="form-control" id="numeroPpl" name="numero_ppl" required />
+          </div>
+        </div>
+
+        <div class="row mt-3 my-4 py-4">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+          </div>
+          <div class="col-md-12 text-center mt-2">
+            <button type="button" class="btn btn-secondary btn-block" onclick="resetForm()">Limpiar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <footer class="text-center mt-4">
+      <p class="footer-text">&copy; 2023 Web creada por IT Etarey</p>
+    </footer>
+    <script>
+      function resetForm() {
+        const form = document.getElementById('miFormulario');
+        form.reset();
+        resetValidation();
+      }
+  
+      function resetValidation() {
+        const fields = document.querySelectorAll('.form-control');
+        fields.forEach((field) => {
+          field.classList.remove('is-invalid');
+        });
+      }
+  
+      function validateForm() {
+        const requiredFields = [
+          'fecha',
+          'horaComienzo',
+          'fechaCierre',
+          'horaFin',
+          'modulo',
+          'piso',
+          'disciplina',
+          'causaDiagnostico',
+          'nombreElemento',
+          'estado',
+          'solicitado',
+          'personal',
+          'equipo',
+          'local'
+        ];
+        let isValid = true;
+        requiredFields.forEach((fieldId) => {
+          const field = document.getElementById(fieldId);
+          if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add('is-invalid');
+          } else {
+            field.classList.remove('is-invalid');
+          }
+        });
+        const fechaField = document.getElementById('fecha');
+        const fechaSeleccionada = new Date(fechaField.value);
+        const fechaActual = new Date();
+        if (fechaSeleccionada > fechaActual) {
+          isValid = false;
+          fechaField.classList.add('is-invalid');
+        } else {
+          fechaField.classList.remove('is-invalid');
+        }
+        const selectFields = document.querySelectorAll('select');
+        selectFields.forEach((select) => {
+          if (select.value === 'Seleccionar...') {
+            isValid = false;
+            select.classList.add('is-invalid');
+          } else {
+            select.classList.remove('is-invalid');
+          }
+        });
+        if (!isValid) {
+          alert('Por favor, complete todos los campos obligatorios.');
+          return false;
+        }
+        return true;
+      }
+    </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+  
+  </html>

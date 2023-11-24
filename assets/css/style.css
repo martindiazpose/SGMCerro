@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar.navbar-light {
+    background-color: rgba(0, 0, 0, 0.76) !important;
+}
+
+.navbar-brand img {
+    height: 40px;
+    vertical-align: middle;
+}
+
+h1 {
+    margin: 0;
+    color:white
+}
+
+.custom-button {
+    margin-top: 10px;
+}
+
+.centered-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-nav a {
+    color: rgb(206, 81, 9);
+    transition: color 0.3s ease;
+}
+
+.navbar-nav a:hover {
+    color: black;
+}
+
+.btn.btn-primary {
+    background-color: rgb(206, 81, 9);
+    border-color: black;
+    color: white;
+}
+
+.btn.btn-primary:hover {
+    background-color: white;
+    color: rgb(206, 81, 9);
+}
+
+.container-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-card {
+    width: 100%;
+    max-width: 500px; /* Ajusta según tus necesidades */
+    margin-bottom: 20px; /* Ajusta según tus necesidades */
+}
+
+.card-header,
+.card-body {
+    text-align: center;
+}

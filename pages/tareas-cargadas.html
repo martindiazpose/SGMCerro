@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas Cargadas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="http://192.168.80.8/eco9/mant.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//192.168.80.8/eco9/style.css" />
+</head>
+    <style>
+        th {
+            background-color: #007bff;
+            color: white;
+            white-space: nowrap; /* Evitar el salto de línea en el encabezado */
+        }
+
+        th.number-header {
+            background-color: #0056b3;
+        }
+
+        /* Ajuste para el contenedor de la tabla */
+        .table-container {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://www.teyma.com/" target="_blank">
+            <img src="http://192.168.80.8/eco9/logo.png" class="d-inline-block align-top" alt="Logo TEYMA">
+        </a>
+        <div class="container">
+            <h1 class="mt-4 text-center"></h1>
+            <div class="navbar-nav mx-auto">
+                <a href="http://192.168.20.12/eco9/pages/manual.html" class="btn btn-primary mt-2 custom-button centered-button"
+                    target="_blank">Manual de Llenado Formulario</a>
+                <a href="http://192.168.20.12/eco9/pages/llenado.html"
+                    class="btn btn-primary mt-2 custom-button centered-button" target="_blank">Responsables de Cargar Formularios</a>
+                <a href="http://192.168.20.12/eco9/pages/tareas-cargadas"
+                    class="btn btn-primary mt-2 custom-button centered-button" target="_blank">Tareas Cargadas</a>
+                <a href="http://192.168.80.8/glpi/front/central.php" class="btn btn-primary mt-2 custom-button centered-button"
+                    target="_blank">Ticket a IT</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mb-4 text-cente">
+        <h1>Tareas Cargadas</h1>
+
+        <!-- Agregado el formulario de filtrado -->
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="funcionario">Funcionario:</label>
+                <select class="form-control" id="funcionario">
+                    <!-- Opciones del select -->
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="mes">Mes:</label>
+                <select class="form-control" id="mes">
+                    <!-- Opciones del select -->
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label></label>
+                <button class="btn btn-primary" id="filtrarBtn">Filtrar</button>
+            </div>
+            <div class="col-md-3 mb-3">
+                <!-- Botón para descargar la tabla -->
+                <button class="btn btn-success" id="descargarBtn">Descargar CSV</button>
+            </div>
+        </div>
+
+        <!-- Eliminado el formulario de filtrado -->
+        <div id="informacion-container" class="table-container"></div>
+    </div>
+
+    <script>
+        let allData = []; // Almacena todos los datos obtenidos del servidor
+
+        // Realizar una solicitud para obtener los datos desde el servidor
+        fetch('http://192.168.80.8:3000/obtener-datos')
+            .then(response => response.json())
+            .then(data => {
+                allData = data.slice(-300).reverse(); // Tomar las últimas 300 entradas y revertir el orden
+                renderTable(allData); // Renderiza la tabla con todos los datos
+            })
+            .catch(error => {
+                console.error('Error al obtener datos:', error);
+                document.getElementById('informacion-container').innerHTML = '<p>Error al obtener datos.</p>';
+            });
+
+        // Función para renderizar la tabla
+        function renderTable(data) {
+            const container = document.getElementById('informacion-container');
+            container.innerHTML = ''; // Limpiar el contenedor
+
+            if (data.length > 0) {
+                const table = document.createElement('table');
+                table.classList.add('table', 'table-bordered'); // Agregar clases de Bootstrap para la apariencia
+
+                // Crear encabezados de tabla
+                const headerRow = table.insertRow();
+                Object.keys(data[0]).forEach(key => {
+                    const headerCell = document.createElement('th');
+                    headerCell.textContent = key.toUpperCase();
+                    if (!/^\d+$/.test(key)) {
+                        headerCell.classList.add('number-header'); // Clase para encabezados no numéricos
+                    }
+                    headerRow.appendChild(headerCell);
+                });
+
+                // Crear filas de datos
+                data.forEach(row => {
+                    const dataRow = table.insertRow();
+                    Object.values(row).forEach(value => {
+                        const dataCell = dataRow.insertCell();
+                        dataCell.textContent = value;
+                    });
+                });
+
+                container.appendChild(table);
+
+                // Agregar evento de clic al botón de descargar
+                document.getElementById('descargarBtn').addEventListener('click', function () {
+                    // Llamar a la función para descargar datos
+                    descargarCSV(data);
+                });
+            } else {
+                container.innerHTML = '<p>No hay datos disponibles.</p>';
+            }
+        }
+
+        // Función para descargar datos como CSV
+        function descargarCSV(data) {
+            // Crear contenido CSV
+            const csvContent = "data:text/csv;charset=utf-8," +
+                data.map(row => Object.values(row).map(value => '"' + value + '"').join(',')).join('\n');
+
+            // Crear un enlace temporal y asignarle el contenido CSV
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "tareas_cargadas.csv");
+
+            // Simular clic en el enlace para iniciar la descarga
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+
+</html>
