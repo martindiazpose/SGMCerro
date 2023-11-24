@@ -4,16 +4,16 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mantenimiento Cerro</title>
-  <link rel="icon" href="/assets/img/SGMC.png" type="image/x-icon">
+  <link rel="icon" href="./public/assets/img/SGMC.png" type="image/x-icon">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./public/assets/css/style.css" />
 </head>
 
 <body class="bg-light">
   <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <div class="container d-flex align-items-center">
       <a class="navbar-brand" href="https://www.teyma.com/" target="_blank">
-        <img src="./assets/img/logo.svg" class="d-inline-block align-top" alt="Logo TEYMA">
+        <img src="./public/assets/img/logo.svg" class="d-inline-block align-top" alt="Logo TEYMA">
       </a>
       <h1 class="mt-4 text-center flex-grow-1 text-white">Mantenimiento Hospital Cerro</h1>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
@@ -30,8 +30,7 @@
   </nav>
 
   <div class="container mt-4 custom-form bg-white p-4 rounded d-flex justify-content-center align-items-center">
-    <form id="miFormulario" action="/guardar-en-excel" method="post" onsubmit="return validateForm()">
-      <div class="form-group">
+    <form id="miFormulario" action="/guardar-en-excel" method="post" onsubmit="return validateForm()">      <div class="form-group">
         <label for="formID">ID:</label>
         <input type="text" class="form-control" id="formID" name="formID" readonly />
       </div>
