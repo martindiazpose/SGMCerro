@@ -71,3 +71,30 @@ h1 {
 .card-body {
     text-align: center;
 }
+
+/* Agrega estas reglas para el fondo de imagen en dispositivos móviles */
+@media (max-width: 767px) {
+    .navbar {
+      background-size: cover;
+      background-position: center;
+      background-image: url('/assets/img/fachada-mobile.jpeg'); /* Ruta correcta de tu imagen móvil */
+    }
+  
+    .navbar img {
+      display: none; /* Oculta la imagen si se muestra como un elemento en línea */
+    }
+  
+    .navbar-brand {
+      display: none; /* Opcional: puedes ocultar el logo en dispositivos móviles si lo deseas */
+    }
+  
+    .navbar img.mobile-bg {
+      display: block; /* Muestra la imagen en dispositivos móviles */
+      width: 100%;
+    }
+  
+    h1.mobile-heading {
+      display: none; /* Opcional: puedes ocultar el encabezado en dispositivos móviles si lo deseas */
+      color: black;
+    }
+  }
