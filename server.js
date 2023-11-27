@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const xlsx = require('xlsx');
 const path = require('path');
 const mysql = require('mysql');
 
@@ -21,7 +20,7 @@ connection.connect((err) => {
     }
 });
 
-app.post('/guardar-en-excel', (req, res) => {
+app.post('/guardar-en-base-de-datos', (req, res) => {
     const formData = req.body;
 
     // Lógica para guardar los datos en la base de datos
@@ -64,4 +63,3 @@ app.post('/guardar-en-excel', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor iniciado en http://localhost:${PORT}`);
 });
- 
