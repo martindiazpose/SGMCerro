@@ -1,65 +1,43 @@
-const cors = require('cors');
+require('dotenv').config();
+
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const mysql = require('mysql');
+const fetch = require('node-fetch');
+const btoa = require('btoa');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());  // Agrega esta línea para habilitar CORS
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+const APP_KEY = process.env.DROPBOX_APP_KEY;
+const APP_SECRET = process.env.DROPBOX_APP_SECRET;
 
-// Configuración de la conexión a la base de datos
-const connection = mysql.createConnection(process.env.JAWSDB_URL);
-
-connection.connect((err) => {
-    if (err) {
-        console.error('Error de conexión a la base de datos:', err);
-    } else {
-        console.log('Conexión exitosa a la base de datos');
-    }
+app.get('/auth', (req, res) => {
+    const authUrl = `https://www.dropbox.com/oauth2/authorize?client_id=${APP_KEY}&response_type=code&redirect_uri=http://localhost:${PORT}/callback`;
+    res.redirect(authUrl);
 });
 
-app.post('/guardar-en-base-de-datos', (req, res) => {
-    const formData = req.body;
+app.get('/callback', async (req, res) => {
+    const { code } = req.query;
 
-    // Lógica para guardar los datos en la base de datos
-    const sql = `
-        INSERT INTO formulario_datos
-        (fecha, hora_comienzo, modulo, piso, fecha_cierre, hora_fin, local, disciplina, causa_diagnostico, nombre_elemento, estado, solicitado, personal, equipo, observaciones, materiales)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    const tokenUrl = 'https://api.dropbox.com/oauth2/token';
+    const credentials = btoa(`${APP_KEY}:${APP_SECRET}`);
+    const body = `code=${code}&grant_type=authorization_code&redirect_uri=http://localhost:${PORT}/callback`;
 
-    const values = [
-        formData.fecha,
-        formData.hora_comienzo,
-        formData.modulo,
-        formData.piso,
-        formData.fecha_cierre,
-        formData.hora_fin,
-        formData.local,
-        formData.disciplina,
-        formData.causaDiagnostico,
-        formData.nombre_elemento,
-        formData.estado,
-        formData.solicitado,
-        formData.personal,
-        formData.equipo,
-        formData.observaciones,
-        formData.materiales
-    ];
-
-    connection.query(sql, values, (err, result) => {
-        if (err) {
-            console.error('Error al insertar datos en la base de datos:', err);
-            res.status(500).send('Error al guardar los datos en la base de datos.');
-        } else {
-            console.log('Datos guardados en la base de datos.');
-            res.send('Datos guardados exitosamente.');
-        }
+    const response = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': `Basic ${credentials}`
+        },
+        body: body
     });
+
+    const data = await response.json();
+    const accessToken = data.access_token;
+
+    // Puedes almacenar accessToken en tus variables de entorno o base de datos
+    console.log('Access Token:', accessToken);
+
+    res.send('Autenticación exitosa. Puedes cerrar esta ventana.');
 });
 
 app.listen(PORT, () => {
