@@ -22,8 +22,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav mx-auto">
-          <a href="/pages/manual.html" class="btn btn-primary mt-2 custom-button centered-button"
-            target="_blank">Manual de Llenado Formulario</a>
+          <a href="/pages/manual.html" class="btn btn-primary mt-2 custom-button centered-button" target="_blank">Manual
+            de Llenado Formulario</a>
           <a href="/pages/tareas-cargadas.html" class="btn btn-primary mt-2 custom-button centered-button"
             target="_blank">Tareas Cargadas</a>
         </div>
@@ -33,7 +33,8 @@
   <div class="container mt-4">
     <div class="mx-auto"> <!-- Utilizar mx-auto para centrar el contenido -->
       <div class="custom-form bg-white p-4 rounded">
-        <form id="miFormulario" action="https://sgmcerro.herokuapp.com/guardar-en-dropbox" method="post" onsubmit="return validateForm()">
+        <form id="miFormulario" action="https://sgmcerro.herokuapp.com/guardar-en-dropbox" method="post"
+          onsubmit="return validateForm()">
           <div class="form-group">
             <label for="formID">ID:</label>
             <input type="text" class="form-control" id="formID" name="formID" readonly />
@@ -186,78 +187,81 @@
     </div>
   </div>
   <footer class="text-center mt-4">
-    <p class="footer-text">&copy; 2023 Web creada por IT Etarey</p>
+    <p class="footer-text" id="year">&copy; 2023 Web creada por IT Etarey</p>
   </footer>
-      <script>
-        function resetForm() {
-          const form = document.getElementById('miFormulario');
-          form.reset();
-          resetValidation();
-        }
+  <script>
 
-        function resetValidation() {
-          const fields = document.querySelectorAll('.form-control');
-          fields.forEach((field) => {
-            field.classList.remove('is-invalid');
-          });
-        }
+    document.getElementById('year').innerText = `&copy; ${new Date().getFullYear()} Web creada por IT Etarey`;
+  </script>
+  <script>
+    function resetForm() {
+      const form = document.getElementById('miFormulario');
+      form.reset();
+      resetValidation();
+    }
 
-        function validateForm() {
-          const requiredFields = [
-            'fecha',
-            'horaComienzo',
-            'fechaCierre',
-            'horaFin',
-            'modulo',
-            'piso',
-            'disciplina',
-            'causaDiagnostico',
-            'nombreElemento',
-            'estado',
-            'solicitado',
-            'personal',
-            'equipo',
-            'local'
-          ];
-          let isValid = true;
-          requiredFields.forEach((fieldId) => {
-            const field = document.getElementById(fieldId);
-            if (!field.value.trim()) {
-              isValid = false;
-              field.classList.add('is-invalid');
-            } else {
-              field.classList.remove('is-invalid');
-            }
-          });
-          const fechaField = document.getElementById('fecha');
-          const fechaSeleccionada = new Date(fechaField.value);
-          const fechaActual = new Date();
-          if (fechaSeleccionada > fechaActual) {
-            isValid = false;
-            fechaField.classList.add('is-invalid');
-          } else {
-            fechaField.classList.remove('is-invalid');
-          }
-          const selectFields = document.querySelectorAll('select');
-          selectFields.forEach((select) => {
-            if (select.value === 'Seleccionar...') {
-              isValid = false;
-              select.classList.add('is-invalid');
-            } else {
-              select.classList.remove('is-invalid');
-            }
-          });
-          if (!isValid) {
-            alert('Por favor, complete todos los campos obligatorios.');
-            return false;
-          }
-          return true;
+    function resetValidation() {
+      const fields = document.querySelectorAll('.form-control');
+      fields.forEach((field) => {
+        field.classList.remove('is-invalid');
+      });
+    }
+
+    function validateForm() {
+      const requiredFields = [
+        'fecha',
+        'horaComienzo',
+        'fechaCierre',
+        'horaFin',
+        'modulo',
+        'piso',
+        'disciplina',
+        'causaDiagnostico',
+        'nombreElemento',
+        'estado',
+        'solicitado',
+        'personal',
+        'equipo',
+        'local'
+      ];
+      let isValid = true;
+      requiredFields.forEach((fieldId) => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+          isValid = false;
+          field.classList.add('is-invalid');
+        } else {
+          field.classList.remove('is-invalid');
         }
-      </script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script>
-</body >
-  
+      });
+      const fechaField = document.getElementById('fecha');
+      const fechaSeleccionada = new Date(fechaField.value);
+      const fechaActual = new Date();
+      if (fechaSeleccionada > fechaActual) {
+        isValid = false;
+        fechaField.classList.add('is-invalid');
+      } else {
+        fechaField.classList.remove('is-invalid');
+      }
+      const selectFields = document.querySelectorAll('select');
+      selectFields.forEach((select) => {
+        if (select.value === 'Seleccionar...') {
+          isValid = false;
+          select.classList.add('is-invalid');
+        } else {
+          select.classList.remove('is-invalid');
+        }
+      });
+      if (!isValid) {
+        alert('Por favor, complete todos los campos obligatorios.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+  </body >
   </html >
