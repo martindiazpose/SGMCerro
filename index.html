@@ -183,6 +183,11 @@
             </div>
           </div>
         </form>
+        <div id="confirmation" style="display: none;">
+          <p>¡La información se ha guardado correctamente!</p>
+          <button type="button" class="btn btn-primary" onclick="resetAndHideConfirmation()">Volver al
+            formulario</button>
+        </div>
       </div>
     </div>
   </div>
@@ -190,10 +195,13 @@
     <p class="footer-text" id="year">&copy; 2023 Web creada por IT Etarey</p>
   </footer>
   <script>
-
     document.getElementById('year').innerText = `&copy; ${new Date().getFullYear()} Web creada por IT Etarey`;
-  </script>
-  <script>
+
+    function resetAndHideConfirmation() {
+      resetForm();
+      document.getElementById('confirmation').style.display = 'none';
+    }
+
     function resetForm() {
       const form = document.getElementById('miFormulario');
       form.reset();
@@ -208,60 +216,44 @@
     }
 
     function validateForm() {
-      const requiredFields = [
-        'fecha',
-        'horaComienzo',
-        'fechaCierre',
-        'horaFin',
-        'modulo',
-        'piso',
-        'disciplina',
-        'causaDiagnostico',
-        'nombreElemento',
-        'estado',
-        'solicitado',
-        'personal',
-        'equipo',
-        'local'
-      ];
-      let isValid = true;
-      requiredFields.forEach((fieldId) => {
-        const field = document.getElementById(fieldId);
-        if (!field.value.trim()) {
-          isValid = false;
-          field.classList.add('is-invalid');
-        } else {
-          field.classList.remove('is-invalid');
-        }
-      });
-      const fechaField = document.getElementById('fecha');
-      const fechaSeleccionada = new Date(fechaField.value);
-      const fechaActual = new Date();
-      if (fechaSeleccionada > fechaActual) {
-        isValid = false;
-        fechaField.classList.add('is-invalid');
-      } else {
-        fechaField.classList.remove('is-invalid');
-      }
-      const selectFields = document.querySelectorAll('select');
-      selectFields.forEach((select) => {
-        if (select.value === 'Seleccionar...') {
-          isValid = false;
-          select.classList.add('is-invalid');
-        } else {
-          select.classList.remove('is-invalid');
-        }
-      });
+      // ... (resto de la función)
+
       if (!isValid) {
         alert('Por favor, complete todos los campos obligatorios.');
         return false;
       }
-      return true;
+
+      // Realizar la solicitud POST
+      fetch('https://sgmcerro.herokuapp.com/guardar-en-dropbox', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Puedes enviar datos adicionales aquí si es necesario
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Manejar la respuesta del servidor
+          if (data.success) {
+            // Mostrar la confirmación y ocultar el formulario
+            document.getElementById('confirmation').style.display = 'block';
+            document.getElementById('miFormulario').style.display = 'none';
+          } else {
+            alert('Hubo un problema al guardar la información.');
+          }
+        })
+        .catch(error => {
+          console.error('Error al procesar la solicitud:', error);
+          alert('Hubo un error en el servidor.');
+        });
+
+      // Evitar que el formulario se envíe de inmediato
+      return false;
     }
   </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script>
-  </body >
-  </html >
+</body>
+
+</html>
