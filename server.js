@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -6,6 +7,7 @@ const mysql = require('mysql');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());  // Agrega esta línea para habilitar CORS
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
